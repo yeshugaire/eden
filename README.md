@@ -23,6 +23,6 @@
 
 
 # DEVELOPERS:
- - Daniel Louis : 
- - Taylor Zlomke:
+ - Daniel Lois : https://github.com/funkedee
+ - Taylor Zlomke: https://github.com/tzlomke 
  - Yeshu Gaire: https://github.com/yeshugaire
