@@ -37,6 +37,10 @@ module.exports = function (app) {
 		successRedirect: "/mygarden",
 		failureRedirect: "/signup"
 	}));
+	app.post("/signin", passport.authenticate("local-signin", {
+		successRedirect: "/mygarden",
+		failureRedirect: "/signin"
+	}));
 
 	// Render 404 page for any unmatched routes
 	app.get("*", function (req, res) {
