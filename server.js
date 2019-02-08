@@ -34,15 +34,12 @@ app.engine(
 );
 app.set("view engine", "handlebars");
 
-// Models
-var models = require("./models");
-
 // Routes
 require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app, passport);
 
 // Passport Strategies
-require("./config/passport/passport")(passport, models.user);
+require("./config/passport/passport")(passport, db.user);
 
 var syncOptions = { force: false };
 

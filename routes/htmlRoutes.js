@@ -29,6 +29,8 @@ module.exports = function (app) {
 	// Auth Get Routes
 	app.get("/signup", authController.signup);
 	app.get("/signin", authController.signin);
+	app.get("/mygarden", isLoggedIn, authController.mygarden);
+	app.get("/logout", authController.logout);
 
 	// Auth Post Routes
 	app.post("/signup", passport.authenticate("local-signup", {
@@ -40,4 +42,14 @@ module.exports = function (app) {
 	app.get("*", function (req, res) {
 		res.render("404");
 	});
+};
+
+// Checks to see if user is logged in. If not, "mygarden" is not accessible
+function isLoggedIn(req, res, next) {
+	if (req.isAuthenticated()) {
+		return next();
+	};
+	
+	// If not signed in, redirect to signin page
+	res.redirect("/signin");
 };
