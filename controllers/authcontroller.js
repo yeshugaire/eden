@@ -1,3 +1,4 @@
+// Method Controller for Auth Routes
 var exports = module.exports = {};
 
 exports.signup = function(req, res) {
