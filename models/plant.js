@@ -36,5 +36,11 @@ module.exports = function(sequelize, DataTypes) {
 		},
 	});
 
+	Plant.associate = function(models) {
+		Plant.belongsToMany(models.Garden, {
+			through: "UserGarden"
+		});
+	};
+
 	return Plant;
 };
