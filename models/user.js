@@ -1,38 +1,44 @@
-module.exports = function(sequelize, Sequelize) {
-    var User = sequelize.define("user",  {
-        id: {
-            autoIncrement: true,
-            primaryKey: true,
-            type: Sequelize.INTEGER
-        },
+module.exports = function (sequelize, Sequelize) {
+	var User = sequelize.define("user", {
+		id: {
+			autoIncrement: true,
+			primaryKey: true,
+			type: Sequelize.INTEGER
+		},
 
-        username: {
-            type: Sequelize.TEXT,
-            allowNull: false,
-        },
+		username: {
+			type: Sequelize.TEXT,
+			allowNull: false,
+		},
 
-        email: {
-            type: Sequelize.STRING,
-            allowNull: false,
-            validate: {
-                isEmail: true
-            }
-        },
+		email: {
+			type: Sequelize.STRING,
+			allowNull: false,
+			validate: {
+				isEmail: true
+			}
+		},
 
-        password: {
-            type: Sequelize.TEXT,
-            allowNull: false
-        },
+		password: {
+			type: Sequelize.TEXT,
+			allowNull: false
+		},
 
-        last_login: {
-            type: Sequelize.DATE
-        },
-        
-        status: {
-            type: Sequelize.ENUM("active", "inactive"),
-            defaultValue: "active"
-        }
-    });
+		last_login: {
+			type: Sequelize.DATE
+		},
 
-    return User;
+		status: {
+			type: Sequelize.ENUM("active", "inactive"),
+			defaultValue: "active"
+		}
+	});
+
+	User.associate = function (models) {
+		User.hasMany(models.Plant, {
+			onDelete: "cascade"
+		});
+	};
+
+	return User;
 };

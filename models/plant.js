@@ -1,44 +1,31 @@
 module.exports = function(sequelize, DataTypes) {
 	var Plant = sequelize.define("Plant", {
-		common_name:  {
+		plant_name:  {
 			type: DataTypes.STRING,
 			allowNull: false
 		},
 
-		species_name: {
-			type: DataTypes.STRING,
-			allowNull: true,
+		data: {
+			type: DataTypes.TEXT,
+			defaultValue: "No data available for this plant type."
 		},
 
-		description: {
+		personal_name: {
+			type: DataTypes.STRING,
+			allowNull: true
+		},
+
+		notes: {
 			type: DataTypes.TEXT,
 			allowNull: true
-		},
-
-		sowing_method: {
-			type: DataTypes.VARCHAR,
-			allowNull: true
-		},
-
-		sun_requirements: {
-			type: DataTypes.VARCHAR,
-			allowNull: true
-		},
-
-		water_needs: {
-			type: DataTypes.VARCHAR,
-			allowNull: true,
-		},
-
-		image_path: {
-			type: DataTypes.STRING,
-			allowNull: true
-		},
+		}
 	});
 
 	Plant.associate = function(models) {
-		Plant.belongsToMany(models.Garden, {
-			through: "UserGarden"
+		Plant.belongsTo(models.User, {
+			foreignKey: {
+				allowNull: false
+			}
 		});
 	};
 
