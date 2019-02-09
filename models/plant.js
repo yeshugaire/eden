@@ -10,6 +10,12 @@ module.exports = function(sequelize, DataTypes) {
 			defaultValue: "No data available for this plant type."
 		},
 
+		image_path: {
+			type: DataTypes.STRING,
+			allowNull: true,
+			// defaultValue
+		},
+
 		personal_name: {
 			type: DataTypes.STRING,
 			allowNull: true
