@@ -1,7 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
 	var Garden = sequelize.define("Garden", {
-		name: models.User + "'s Garden",
-		allowNull: false
+		name: models.User + "'s Garden"
 	});
 
 	Garden.associate = function(models) {
