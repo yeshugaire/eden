@@ -52,8 +52,8 @@ module.exports = function (app) {
 function isLoggedIn(req, res, next) {
 	if (req.isAuthenticated()) {
 		return next();
-	};
-	
+	}
+
 	// If not signed in, redirect to signin page
 	res.redirect("/signin");
-};
+}
