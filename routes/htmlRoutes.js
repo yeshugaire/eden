@@ -33,8 +33,10 @@ module.exports = function (app) {
 		db.User.findOne({
 			where: {
 				username: req.user.username
-			}
+			},
+			include: [db.Plant]
 		}).then(function (dbGarden) {
+			console.log(dbGarden);
 			res.render("mygarden", {
 				mygarden: dbGarden
 			});
