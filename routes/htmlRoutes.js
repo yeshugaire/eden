@@ -1,5 +1,6 @@
 var db = require("../models");
 var passport = require("passport");
+var userModel = require("../models/user");
 
 module.exports = function (app) {
 	// Load index page
@@ -35,10 +36,11 @@ module.exports = function (app) {
 				username: req.user.username
 			},
 			include: [db.Plant]
-		}).then(function (dbGarden) {
-			console.log(dbGarden);
+		}).then(function (data) {
+			var hbsObject = data.dataValues.Plants[0].dataValues;
+			console.log(hbsObject);
 			res.render("mygarden", {
-				mygarden: dbGarden
+				mygarden: hbsObject
 			});
 		});
 	});
