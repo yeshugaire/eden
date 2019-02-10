@@ -37,10 +37,10 @@ module.exports = function (app) {
 			},
 			include: [db.Plant]
 		}).then(function (data) {
-			var hbsObject = data.dataValues.Plants[0].dataValues;
+			var hbsObject = data.dataValues.Plants;
 			console.log(hbsObject);
 			res.render("mygarden", {
-				mygarden: hbsObject
+				myPlants: hbsObject
 			});
 		});
 	});
