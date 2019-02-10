@@ -1,6 +1,5 @@
 var db = require("../models");
 var passport = require("passport");
-var userModel = require("../models/user");
 
 module.exports = function (app) {
 	// Load index page
@@ -30,6 +29,8 @@ module.exports = function (app) {
 	app.get("/signin", function (req, res) {
 		res.render("signin");
 	});
+
+	// User's Garden
 	app.get("/mygarden/:username", isLoggedIn, function (req, res) {
 		db.User.findOne({
 			where: {
@@ -41,6 +42,21 @@ module.exports = function (app) {
 			console.log(hbsObject);
 			res.render("mygarden", {
 				myPlants: hbsObject
+			});
+		});
+	});
+
+	// Plant Route
+	app.get("/plants/:id", function(req, res) {
+		db.Plant.findOne({
+			where: {
+				id: req.params.id
+			}
+		}).then(function (data) {
+			var hbsObject = data.dataValues;
+			console.log(hbsObject);
+			res.render("plants", {
+				plant: hbsObject
 			});
 		});
 	});
