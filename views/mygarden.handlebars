@@ -9,9 +9,11 @@
 <body>
 	<h2>My Garden</h2>
 
+	{{!-- Below is for test. Delete or update as needed. --}}
 	<ul>
 		{{#each myPlants}}
 			<li>{{plant_name}}</li>
+			<li><img src={{image_path}}></li>
 		{{/each}}
 	</ul>
 </body>
