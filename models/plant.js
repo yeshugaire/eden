@@ -13,7 +13,8 @@ module.exports = function(sequelize, DataTypes) {
 
 		image_path: {
 			type: DataTypes.STRING,
-			allowNull: true
+			allowNull: false,
+			defaultValue: "https://t3.ftcdn.net/jpg/01/06/37/46/240_F_106374609_yP3PAzCuk1qGbFQE92HBCeuCvXllLMzA.jpg"
 		},
 
 		personal_name: {
