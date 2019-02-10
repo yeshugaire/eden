@@ -37,18 +37,21 @@ module.exports = function (app) {
 	// route for adding new plant from garden.org to plants table in database
 	app.post("/addPlant", function (req, res) {
 		// call to garden.org for plant info
-		axios.get("https://garden.org/plants/view/180948/Beach-Rose-Rosa-rugosa/")
+		axios.get("https://garden.org/plants/view/83101/Water-Primrose-Ludwigia-peploides/")
 			.then(function (body) {
 				// scrape html for plant info tables
 				var $ = cheerio.load(body.data);
-				// save info tables
+				
+				// find general info table (last table)
+				var generalTableIndex = $("body").find(".simple-table").length - 1;
+				// save  general info table
 				var plantInfoTables = "";
 				$(".simple-table").each(function (i, elm) {
-					if (i === 1) {
+					if (i === generalTableIndex) {
 						plantInfoTables += $(this).html();
-					};
+					}
 				});
-				// log plan info tables
+				// log plant info tables
 				console.log(plantInfoTables);
 			});
 	});
