@@ -1,6 +1,9 @@
+// Initialize Moment
 var moment = require("moment");
+moment();
 
 module.exports = function(sequelize, DataTypes) {
+
 	var Event = sequelize.define("Event", {
 		event_id: {
 			autoIncrement: true,
@@ -13,33 +16,82 @@ module.exports = function(sequelize, DataTypes) {
 			allowNull: false
 		},
 
+		event_type: {
+			type: DataTypes.STRING,
+			allowNull: false
+		},
+
 		time_start: {
-			type: DataTypes.VARCHAR,
+			type: DataTypes.STRING,
 			allowNull: false,
 			defaultValue: "00:00"
 		},
 
 		time_end: {
-			type: DataTypes.VARCHAR,
+			type: DataTypes.STRING,
 			allowNull: false,
 			defaultValue: "23:59"
 		},
 
-		days_of_week: {
-			type: DataTypes.ARRAY(DataTypes.INTEGER),
-			allowNull: false
+		// Stores Each Day of Week as Boolean, true means event does occur. More efficient way to do this?
+		sunday: {
+			type: DataTypes.BOOLEAN,
+			allowNull: false,
+			defaultValue: false
 		},
 
-		date_start: {
-			type: DataTypes.DATE,
+		monday: {
+			type: DataTypes.BOOLEAN,
 			allowNull: false,
-			defaultValue: moment().format("MM DD YYYY")
+			defaultValue: false
+		},
+
+		tuesday: {
+			type: DataTypes.BOOLEAN,
+			allowNull: false,
+			defaultValue: false
+		},
+
+		wednesday: {
+			type: DataTypes.BOOLEAN,
+			allowNull: false,
+			defaultValue: false
+		},
+
+		thursday: {
+			type: DataTypes.BOOLEAN,
+			allowNull: false,
+			defaultValue: false
+		},
+
+		friday: {
+			type: DataTypes.BOOLEAN,
+			allowNull: false,
+			defaultValue: false
+		},
+
+		saturday: {
+			type: DataTypes.BOOLEAN,
+			allowNull: false,
+			defaultValue: false
+		},
+
+		// days_of_week: {
+		// 	type: DataTypes.STRING,
+		// 	allowNull: false,
+		// 	defaultValue: "2, 6"
+		// },
+
+		date_start: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			defaultValue: moment().format("YYYY-MM-DD")
 		},
 
 		date_end: {
-			type: DataTypes.DATE,
+			type: DataTypes.STRING,
 			allowNull: false,
-			defaultValue: moment().add(365, "days").format("MM DD YYY")
+			defaultValue: moment().add(365, "days").format("YYYY-MM-DD")
 		}
 	});
 
