@@ -39,17 +39,17 @@ module.exports = function (app) {
 	app.get("/mygarden/:username", isLoggedIn, function (req, res) {
 		db.User.findOne({
 			where: {
-				username: req.user.username
+				id: req.user.id
 			},
-			include: [db.Plant],
-			include: [db.Event]
+			include: [db.Plant, db.Event]
 		}).then(function (data) {
+			console.log(data);
 			var hbsObject1 = data.dataValues.Plants;
 			var hbsObject2 = data.dataValues.Events;
-			console.log(hbsObject);
+			console.log(hbsObject1);
+			console.log(hbsObject2);
 			res.render("mygarden", {
-				myPlants: hbsObject1
-			}, {
+				myPlants: hbsObject1,
 				myEvents: hbsObject2
 			});
 		});
