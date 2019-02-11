@@ -76,12 +76,6 @@ module.exports = function(sequelize, DataTypes) {
 			defaultValue: false
 		},
 
-		// days_of_week: {
-		// 	type: DataTypes.STRING,
-		// 	allowNull: false,
-		// 	defaultValue: "2, 6"
-		// },
-
 		date_start: {
 			type: DataTypes.STRING,
 			allowNull: false,
@@ -91,7 +85,8 @@ module.exports = function(sequelize, DataTypes) {
 		date_end: {
 			type: DataTypes.STRING,
 			allowNull: false,
-			defaultValue: moment().add(365, "days").format("YYYY-MM-DD")
+			// Sets end date to 100 years from date added. See if there's a more elegant way to handle this in the future.
+			defaultValue: moment().add(100, "years").format("YYYY-MM-DD")
 		}
 	});
 
