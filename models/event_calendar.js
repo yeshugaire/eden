@@ -1,3 +1,5 @@
+var moment = require("moment");
+
 module.exports = function(sequelize, DataTypes) {
 	var Event = sequelize.define("Event", {
 		event_id: {
@@ -24,11 +26,30 @@ module.exports = function(sequelize, DataTypes) {
 		},
 
 		days_of_week: {
-			type: DataTypes.ARRAY(Sequlize.TEXT),
+			type: DataTypes.ARRAY(DataTypes.INTEGER),
 			allowNull: false
-		}
+		},
 
+		date_start: {
+			type: DataTypes.DATE,
+			allowNull: false,
+			defaultValue: moment().format("MM DD YYYY")
+		},
+
+		date_end: {
+			type: DataTypes.DATE,
+			allowNull: false,
+			defaultValue: moment().add(365, "days").format("MM DD YYY")
+		}
 	});
+
+	Event.associate = function(models) {
+		Event.belongsTo(models.User, {
+			foreignKey: {
+				allowNull: false
+			}
+		});
+	};
 
 	return Event;
 };

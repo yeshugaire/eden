@@ -29,6 +29,11 @@ module.exports = function (app) {
 	app.get("/signin", function (req, res) {
 		res.render("signin");
 	});
+	app.get("/logout", function (req, res) {
+		req.session.destroy(function () {
+			res.redirect("/");
+		});
+	});
 
 	// User's Garden
 	app.get("/mygarden/:username", isLoggedIn, function (req, res) {
@@ -36,12 +41,16 @@ module.exports = function (app) {
 			where: {
 				username: req.user.username
 			},
-			include: [db.Plant]
+			include: [db.Plant],
+			include: [db.Event]
 		}).then(function (data) {
-			var hbsObject = data.dataValues.Plants;
+			var hbsObject1 = data.dataValues.Plants;
+			var hbsObject2 = data.dataValues.Events;
 			console.log(hbsObject);
 			res.render("mygarden", {
-				myPlants: hbsObject
+				myPlants: hbsObject1
+			}, {
+				myEvents: hbsObject2
 			});
 		});
 	});
@@ -58,12 +67,6 @@ module.exports = function (app) {
 			res.render("plants", {
 				plant: hbsObject
 			});
-		});
-	});
-
-	app.get("/logout", function (req, res) {
-		req.session.destroy(function () {
-			res.redirect("/");
 		});
 	});
 
