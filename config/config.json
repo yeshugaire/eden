@@ -9,7 +9,8 @@
   },
   "test": {
     "username": "root",
-    "password": null,
+    "password": "Ildhcmfam226!",
+    "port": "3306",
     "database": "testdb",
     "host": "localhost",
     "dialect": "mysql",
