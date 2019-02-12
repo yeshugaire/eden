@@ -24,7 +24,26 @@ module.exports = function (app) {
 				$(this).remove();
 				plantLinks.push($(this).attr("href"));
 			});
-			var uniquePlantLinks = [new Set(plantLinks)];
+			// remove duplicates from links
+			var uniquePlantLinks = [];
+			for(let i = 0;i < plantLinks.length; i++){
+				if(uniquePlantLinks.indexOf(plantLinks[i]) == -1){
+					uniquePlantLinks.push(plantLinks[i])
+				};
+			};
+			console.log(uniquePlantLinks);
+
+			// save data as object for handlebars
+			var searchOptions = [];
+			for (i=0; i<plantOptions.length; i++) {
+				var plant = {
+					plantName: plantOptions[i] + ")",
+					link: uniquePlantLinks[i]
+				};
+				searchOptions.push(plant);
+			}
+
+			console.log(searchOptions);
 
 			// log data
 			console.log(uniquePlantLinks);
@@ -41,7 +60,7 @@ module.exports = function (app) {
 			.then(function (body) {
 				// scrape html for plant info tables
 				var $ = cheerio.load(body.data);
-				
+
 				// find general info table (last table)
 				var generalTableIndex = $("body").find(".simple-table").length - 1;
 				// save  general info table
