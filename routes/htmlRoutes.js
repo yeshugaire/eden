@@ -1,13 +1,55 @@
 var db = require("../models");
+var axios = require("axios");
+var cheerio = require("cheerio");
 var passport = require("passport");
 
 module.exports = function (app) {
 	// Load index page
 	app.get("/", function (req, res) {
-		res.render("index", {
-			msg: "Welcome!",
-		});
+		res.render("index");
 	});
+
+	// route for searching plants on garden.org
+	app.get("/searchPlant/:plantName", function (req, res) {
+		// call to garden.org for plant search
+		axios.get("https://garden.org/plants/search/text/?q=" + req.params.plantName).then(function (body) {
+			// scrape html for possible plant names and links
+			var $ = cheerio.load(body.data);
+
+			// save plant names
+			var plantOptions = $("tr").text().split(")");
+
+			// save links
+			var plantLinks = [];
+			$("td a").each(function (i, elm) {
+				$(this).remove();
+				plantLinks.push($(this).attr("href"));
+			});
+			// remove duplicates from links
+			var uniquePlantLinks = [];
+			for(let i = 0;i < plantLinks.length; i++){
+				if(uniquePlantLinks.indexOf(plantLinks[i]) == -1){
+					uniquePlantLinks.push(plantLinks[i])
+				};
+			};
+			console.log(uniquePlantLinks);
+
+			// save data as object for handlebars
+			var searchOptions = [];
+			for (i=0; i<plantOptions.length; i++) {
+				var plant = {
+					plantName: plantOptions[i] + ")",
+					link: uniquePlantLinks[i]
+				};
+				searchOptions.push(plant);
+			}
+
+			console.log(searchOptions);
+
+			// log data
+			console.log(uniquePlantLinks);
+			plantOptions.forEach(function (element) {
+				console.log(element + ")");
 
 	// Load example page and pass in an example by id
 	app.get("/example/:id", function (req, res) {
@@ -70,6 +112,27 @@ module.exports = function (app) {
 		});
 	});
 
+	// route for adding new plant from garden.org to plants table in database
+	app.post("/addPlant", function (req, res) {
+		// call to garden.org for plant info
+		axios.get("https://garden.org/plants/view/83101/Water-Primrose-Ludwigia-peploides/")
+			.then(function (body) {
+				// scrape html for plant info tables
+				var $ = cheerio.load(body.data);
+
+				// find general info table (last table)
+				var generalTableIndex = $("body").find(".simple-table").length - 1;
+				// save  general info table
+				var plantInfoTables = "";
+				$(".simple-table").each(function (i, elm) {
+					if (i === generalTableIndex) {
+						plantInfoTables += $(this).html();
+					}
+				});
+				// log plant info tables
+				console.log(plantInfoTables);
+			});
+
 	// Signup Post Routes
 	app.post("/signup", function(req, res, next) {
 		passport.authenticate("local-signup", function(err, user, info) {
@@ -121,3 +184,4 @@ function isLoggedIn(req, res, next) {
 	// If not signed in, redirect to signin page
 	res.redirect("/signin");
 }
+
