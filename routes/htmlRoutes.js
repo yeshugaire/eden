@@ -9,48 +9,6 @@ module.exports = function (app) {
 		res.render("index");
 	});
 
-	// route for searching plants on garden.org
-	app.get("/searchPlant/:plantName", function (req, res) {
-		// call to garden.org for plant search
-		axios.get("https://garden.org/plants/search/text/?q=" + req.params.plantName).then(function (body) {
-			// scrape html for possible plant names and links
-			var $ = cheerio.load(body.data);
-
-			// save plant names
-			var plantOptions = $("tr").text().split(")");
-
-			// save links
-			var plantLinks = [];
-			$("td a").each(function (i, elm) {
-				$(this).remove();
-				plantLinks.push($(this).attr("href"));
-			});
-			// remove duplicates from links
-			var uniquePlantLinks = [];
-			for(let i = 0;i < plantLinks.length; i++){
-				if(uniquePlantLinks.indexOf(plantLinks[i]) == -1){
-					uniquePlantLinks.push(plantLinks[i])
-				};
-			};
-			console.log(uniquePlantLinks);
-
-			// save data as object for handlebars
-			var searchOptions = [];
-			for (i=0; i<plantOptions.length; i++) {
-				var plant = {
-					plantName: plantOptions[i] + ")",
-					link: uniquePlantLinks[i]
-				};
-				searchOptions.push(plant);
-			}
-
-			console.log(searchOptions);
-
-			// log data
-			console.log(uniquePlantLinks);
-			plantOptions.forEach(function (element) {
-				console.log(element + ")");
-
 	// Load example page and pass in an example by id
 	app.get("/example/:id", function (req, res) {
 		db.Example.findOne({
@@ -97,18 +55,39 @@ module.exports = function (app) {
 		});
 	});
 
-	// Plant Route
-	app.get("/plants/:id", function(req, res) {
-		db.Plant.findOne({
-			where: {
-				id: req.params.id
-			}
-		}).then(function (data) {
-			var hbsObject = data.dataValues;
-			console.log(hbsObject);
-			res.render("plants", {
-				plant: hbsObject
+	// route for searching plants on garden.org
+	app.get("/searchPlant/:plantName", function (req, res) {
+		// call to garden.org for plant search
+		axios.get("https://garden.org/plants/search/text/?q=" + req.params.plantName).then(function (body) {
+			// scrape html for possible plant names and links
+			var $ = cheerio.load(body.data);
+
+			// save plant names
+			var plantOptions = $("tr").text().split(")");
+
+			// save links
+			var plantLinks = [];
+			$("td a").each(function (i, elm) {
+				$(this).remove();
+				plantLinks.push($(this).attr("href"));
 			});
+			// remove duplicates from links
+			var uniquePlantLinks = [];
+			for(var i = 0; i < plantLinks.length; i++){
+				if(uniquePlantLinks.indexOf(plantLinks[i]) === -1){
+					uniquePlantLinks.push(plantLinks[i]);
+				}
+			}
+
+			// save data as object for handlebars
+			var searchOptions = [];
+			for (i=0; i<plantOptions.length; i++) {
+				var plant = {
+					plantName: plantOptions[i] + ")",
+					link: uniquePlantLinks[i]
+				};
+				searchOptions.push(plant);
+			}
 		});
 	});
 
@@ -132,6 +111,22 @@ module.exports = function (app) {
 				// log plant info tables
 				console.log(plantInfoTables);
 			});
+	});
+
+	// View Plant Route
+	app.get("/plants/:id", function(req, res) {
+		db.Plant.findOne({
+			where: {
+				id: req.params.id
+			}
+		}).then(function (data) {
+			var hbsObject = data.dataValues;
+			console.log(hbsObject);
+			res.render("plants", {
+				plant: hbsObject
+			});
+		});
+	});
 
 	// Signup Post Routes
 	app.post("/signup", function(req, res, next) {
@@ -180,8 +175,6 @@ function isLoggedIn(req, res, next) {
 	if (req.isAuthenticated()) {
 		return next();
 	}
-
 	// If not signed in, redirect to signin page
 	res.redirect("/signin");
 }
-

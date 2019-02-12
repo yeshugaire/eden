@@ -15,6 +15,7 @@ $("#addAPlant").on("click", function (event) {
 	} else {
 		// get request to search garden.org for plant
 		$.get("/searchplant/"+ plantName).then(function() {
-			console.log("searching garden.org for plant info")
-		})
-})
+			console.log("searching garden.org for plant info");
+		});
+	}
+});
