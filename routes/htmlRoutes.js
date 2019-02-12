@@ -29,19 +29,28 @@ module.exports = function (app) {
 	app.get("/signin", function (req, res) {
 		res.render("signin");
 	});
+	app.get("/logout", function (req, res) {
+		req.session.destroy(function () {
+			res.redirect("/");
+		});
+	});
 
 	// User's Garden
 	app.get("/mygarden/:username", isLoggedIn, function (req, res) {
 		db.User.findOne({
 			where: {
-				username: req.user.username
+				id: req.user.id
 			},
-			include: [db.Plant]
+			include: [db.Plant, db.Event]
 		}).then(function (data) {
-			var hbsObject = data.dataValues.Plants;
-			console.log(hbsObject);
+			console.log(data);
+			var hbsObject1 = data.dataValues.Plants;
+			var hbsObject2 = data.dataValues.Events;
+			console.log(hbsObject1);
+			console.log(hbsObject2);
 			res.render("mygarden", {
-				myPlants: hbsObject
+				myPlants: hbsObject1,
+				myEvents: hbsObject2
 			});
 		});
 	});
@@ -58,12 +67,6 @@ module.exports = function (app) {
 			res.render("plants", {
 				plant: hbsObject
 			});
-		});
-	});
-
-	app.get("/logout", function (req, res) {
-		req.session.destroy(function () {
-			res.redirect("/");
 		});
 	});
 

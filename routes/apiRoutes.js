@@ -16,6 +16,13 @@ module.exports = function (app) {
 		});
 	});
 
+	// Add Event to Calendar Post Route
+	app.post("/api/events", function(req, res) {
+		db.Event.create(req.body).then(function(dbEvents) {
+			res.json(dbEvents);
+		});
+	});
+
 	// Get All Users
 	app.get("/api/users", function(req, res) {
 		db.User.findAll({
