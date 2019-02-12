@@ -4,17 +4,15 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Eden | My Garden</title>
+	<title>Eden | Plant Database</title>
 </head>
 <body>
-	<h2>My Garden</h2>
+	<h2>Database</h2>
 
 	{{!-- Below is for test. Delete or update as needed. --}}
 	<ul>
-		{{#each myPlants}}
-			<li>{{plant_name}}</li>
-			<li><img src={{image_path}}></li>
-		{{/each}}
+		<li>{{plant.plant_name}}</li>
+		<li><img src={{plant.image_path}}></li>
 	</ul>
 </body>
 </html>

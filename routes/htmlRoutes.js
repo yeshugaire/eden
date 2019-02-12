@@ -1,15 +1,11 @@
 var db = require("../models");
-var authController = require("../controllers/authcontroller");
 var passport = require("passport");
 
 module.exports = function (app) {
 	// Load index page
 	app.get("/", function (req, res) {
-		db.Example.findAll({}).then(function (dbExamples) {
-			res.render("index", {
-				msg: "Welcome!",
-				examples: dbExamples
-			});
+		res.render("index", {
+			msg: "Welcome!",
 		});
 	});
 
@@ -27,20 +23,85 @@ module.exports = function (app) {
 	});
 
 	// Auth Get Routes
-	app.get("/signup", authController.signup);
-	app.get("/signin", authController.signin);
-	app.get("/mygarden", isLoggedIn, authController.mygarden);
-	app.get("/logout", authController.logout);
+	app.get("/signup", function (req, res) {
+		res.render("signup");
+	});
+	app.get("/signin", function (req, res) {
+		res.render("signin");
+	});
 
-	// Auth Post Routes
-	app.post("/signup", passport.authenticate("local-signup", {
-		successRedirect: "/mygarden",
-		failureRedirect: "/signup"
-	}));
-	app.post("/signin", passport.authenticate("local-signin", {
-		successRedirect: "/mygarden",
-		failureRedirect: "/signin"
-	}));
+	// User's Garden
+	app.get("/mygarden/:username", isLoggedIn, function (req, res) {
+		db.User.findOne({
+			where: {
+				username: req.user.username
+			},
+			include: [db.Plant]
+		}).then(function (data) {
+			var hbsObject = data.dataValues.Plants;
+			console.log(hbsObject);
+			res.render("mygarden", {
+				myPlants: hbsObject
+			});
+		});
+	});
+
+	// Plant Route
+	app.get("/plants/:id", function(req, res) {
+		db.Plant.findOne({
+			where: {
+				id: req.params.id
+			}
+		}).then(function (data) {
+			var hbsObject = data.dataValues;
+			console.log(hbsObject);
+			res.render("plants", {
+				plant: hbsObject
+			});
+		});
+	});
+
+	app.get("/logout", function (req, res) {
+		req.session.destroy(function () {
+			res.redirect("/");
+		});
+	});
+
+	// Signup Post Routes
+	app.post("/signup", function(req, res, next) {
+		passport.authenticate("local-signup", function(err, user, info) {
+			if (err) {
+				return next(err);
+			}
+			if (!user) {
+				return res.redirect("/signup");
+			}
+			req.logIn(user, function (err) {
+				if (err) {
+					return next(err);
+				}
+				return res.redirect("/mygarden/" + user.username);
+			});
+		})(req, res, next);
+	});
+
+	// Signin Post Route
+	app.post("/signin", function(req, res, next) {
+		passport.authenticate("local-signin", function(err, user, info) {
+			if (err) {
+				return next(err);
+			}
+			if (!user) {
+				return (res.redirect("/signin"));
+			}
+			req.logIn(user, function (err) {
+				if (err) {
+					return next(err);
+				}
+				return (res.redirect("/mygarden/" + user.username));
+			});
+		})(req, res, next);
+	});
 
 	// Render 404 page for any unmatched routes
 	app.get("*", function (req, res) {

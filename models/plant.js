@@ -7,13 +7,14 @@ module.exports = function(sequelize, DataTypes) {
 
 		data: {
 			type: DataTypes.TEXT,
+			allowNull: false,
 			defaultValue: "No data available for this plant type."
 		},
 
 		image_path: {
 			type: DataTypes.STRING,
-			allowNull: true,
-			// defaultValue
+			allowNull: false,
+			defaultValue: "https://t3.ftcdn.net/jpg/01/06/37/46/240_F_106374609_yP3PAzCuk1qGbFQE92HBCeuCvXllLMzA.jpg"
 		},
 
 		personal_name: {

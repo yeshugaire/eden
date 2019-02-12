@@ -1,6 +1,7 @@
 var db = require("../models");
 
 module.exports = function (app) {
+
 	// Get all plants
 	app.get("/api/plants", function (req, res) {
 		db.Plant.findAll({}).then(function (dbPlants) {
@@ -12,6 +13,15 @@ module.exports = function (app) {
 	app.post("/api/plants", function (req, res) {
 		db.Plant.create(req.body).then(function (dbPlants) {
 			res.json(dbPlants);
+		});
+	});
+
+	// Get All Users
+	app.get("/api/users", function(req, res) {
+		db.User.findAll({
+			include: [db.Plant]
+		}).then(function(dbUser) {
+			res.json(dbUser);
 		});
 	});
 
