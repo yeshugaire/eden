@@ -7,6 +7,7 @@ $(function () {
 			event.push({
 				title: entry.event_type + " " + entry.event_name,
 				start: entry.time_start,
+				dow: entry.daysOfWeek
 			});
 		});
 		$("#calendar").fullCalendar({
@@ -19,21 +20,30 @@ $(function () {
 	});
 
 	// POST New Events
-	$(".addEvent").on("click", function() {
+	$(".addEvent").on("click", function(event) {
+		event.preventDefault();
 		var eventName = $(this).data("name");
 		var eventType = $(this).data("type");
+		var dataId = $(this).data("id");
+		var userName = $(this).data("username");
+		var days = $(".form-check-input:checked").map(function () {
+			return this.value;
+		}).get().join(",");
+
+
+		console.log(days);
 		$.post("/api/events", {
 			event_name: eventName,
 			event_type: eventType,
 			time_start: "00:00",
 			time_end: "23:59",
-			daysOfWeek: [1, 4],
+			daysOfWeek: days,
 			date_start: moment().format("YYYY MM DD"),
 			date_end: moment().add(100, "years").format("YYYY MM DD"),
-			UserId: 1
+			UserId: dataId
 		},
-		function(data, status){
-			window.location.href = "/mygarden/:username";
+		function() {
+			window.location.href = "/mygarden/" + userName;
 		});
 	});
 });

@@ -34,20 +34,13 @@ module.exports = function(sequelize, DataTypes) {
 		},
 
 		// daysOfWeek: {
-		// 	type: Sequelize.TEXT,
-		// 	get: function () {
-		// 		return JSON.parse(this.getDataValue(data));
-		// 	},
-		// 	set: function (value) {
-		// 		this.setDataValue("value", JSON.stringify(value));
-		// 	},
-		// 	defaultValue: [1,2,3,4,5,6,7]
+		// 	type: DataTypes.JSON,
+		// 	allowNull: false
 		// },
 
 		daysOfWeek: {
-			type: DataTypes.JSON,
-			allowNull: false,
-			defaultValue: [1,2,3,4,5,6,7]
+			type: DataTypes.STRING,
+			allowNull: false
 		},
 
 		date_start: {
