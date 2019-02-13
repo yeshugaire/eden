@@ -22,6 +22,7 @@ $(function () {
 	// POST New Events
 	$(".addEvent").on("click", function(event) {
 		event.preventDefault();
+		event.stopImmediatePropagation();
 		var eventName = $(this).data("name");
 		var eventType = $(this).data("type");
 		var dataId = $(this).data("id");
