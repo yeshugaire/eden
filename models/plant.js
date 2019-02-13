@@ -22,16 +22,6 @@ module.exports = function(sequelize, DataTypes) {
 			allowNull: true
 		},
 
-		water_schedule: {
-			type: DataTypes.INTEGER,
-			allowNull: true
-		},
-
-		fertilization_schedule: {
-			type: DataTypes.INTEGER,
-			allowNull: true
-		},
-
 		notes: {
 			type: DataTypes.TEXT,
 			allowNull: true

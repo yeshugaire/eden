@@ -23,6 +23,14 @@ module.exports = function (app) {
 		});
 	});
 
+	// Events Database
+	app.get("/api/events/", function(req, res) {
+		// console.log(req.user.id);
+		db.Event.findAll({}).then(function(dbEvents) {
+			res.json(dbEvents);
+		});
+	});
+
 	// Get All Users
 	app.get("/api/users", function(req, res) {
 		db.User.findAll({

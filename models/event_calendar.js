@@ -33,47 +33,21 @@ module.exports = function(sequelize, DataTypes) {
 			defaultValue: "23:59"
 		},
 
-		// Stores Each Day of Week as Boolean, true means event does occur. More efficient way to do this?
-		sunday: {
-			type: DataTypes.BOOLEAN,
-			allowNull: false,
-			defaultValue: false
-		},
+		// daysOfWeek: {
+		// 	type: Sequelize.TEXT,
+		// 	get: function () {
+		// 		return JSON.parse(this.getDataValue(data));
+		// 	},
+		// 	set: function (value) {
+		// 		this.setDataValue("value", JSON.stringify(value));
+		// 	},
+		// 	defaultValue: [1,2,3,4,5,6,7]
+		// },
 
-		monday: {
-			type: DataTypes.BOOLEAN,
+		daysOfWeek: {
+			type: DataTypes.JSON,
 			allowNull: false,
-			defaultValue: false
-		},
-
-		tuesday: {
-			type: DataTypes.BOOLEAN,
-			allowNull: false,
-			defaultValue: false
-		},
-
-		wednesday: {
-			type: DataTypes.BOOLEAN,
-			allowNull: false,
-			defaultValue: false
-		},
-
-		thursday: {
-			type: DataTypes.BOOLEAN,
-			allowNull: false,
-			defaultValue: false
-		},
-
-		friday: {
-			type: DataTypes.BOOLEAN,
-			allowNull: false,
-			defaultValue: false
-		},
-
-		saturday: {
-			type: DataTypes.BOOLEAN,
-			allowNull: false,
-			defaultValue: false
+			defaultValue: [1,2,3,4,5,6,7]
 		},
 
 		date_start: {

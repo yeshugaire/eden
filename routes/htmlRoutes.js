@@ -56,40 +56,40 @@ module.exports = function (app) {
 	});
 
 	// route for searching plants on garden.org
-	app.get("/searchPlant/:plantName", function (req, res) {
-		// call to garden.org for plant search
-		axios.get("https://garden.org/plants/search/text/?q=" + req.params.plantName).then(function (body) {
-			// scrape html for possible plant names and links
-			var $ = cheerio.load(body.data);
+	// app.get("/searchPlant/:plantName", function (req, res) {
+	// 	// call to garden.org for plant search
+	// 	axios.get("https://garden.org/plants/search/text/?q=" + req.params.plantName).then(function (body) {
+	// 		// scrape html for possible plant names and links
+	// 		var $ = cheerio.load(body.data);
 
-			// save plant names
-			var plantOptions = $("tr").text().split(")");
+	// 		// save plant names
+	// 		var plantOptions = $("tr").text().split(")");
 
-			// save links
-			var plantLinks = [];
-			$("td a").each(function (i, elm) {
-				$(this).remove();
-				plantLinks.push($(this).attr("href"));
-			});
-			// remove duplicates from links
-			var uniquePlantLinks = [];
-			for(var i = 0; i < plantLinks.length; i++){
-				if(uniquePlantLinks.indexOf(plantLinks[i]) === -1){
-					uniquePlantLinks.push(plantLinks[i]);
-				}
-			}
+	// 		// save links
+	// 		var plantLinks = [];
+	// 		$("td a").each(function (i, elm) {
+	// 			$(this).remove();
+	// 			plantLinks.push($(this).attr("href"));
+	// 		});
+	// 		// remove duplicates from links
+	// 		var uniquePlantLinks = [];
+	// 		for(var i = 0; i < plantLinks.length; i++){
+	// 			if(uniquePlantLinks.indexOf(plantLinks[i]) === -1){
+	// 				uniquePlantLinks.push(plantLinks[i]);
+	// 			}
+	// 		}
 
-			// save data as object for handlebars
-			var searchOptions = [];
-			for (i=0; i<plantOptions.length; i++) {
-				var plant = {
-					plantName: plantOptions[i] + ")",
-					link: uniquePlantLinks[i]
-				};
-				searchOptions.push(plant);
-			}
-		});
-	});
+	// 		// save data as object for handlebars
+	// 		var searchOptions = [];
+	// 		for (i = 0; i < plantOptions.length; i++) {
+	// 			var plant = {
+	// 				plantName: plantOptions[i] + ")",
+	// 				link: uniquePlantLinks[i]
+	// 			};
+	// 			searchOptions.push(plant);
+	// 		}
+	// 	});
+	// });
 
 	// route for adding new plant from garden.org to plants table in database
 	app.post("/addPlant", function (req, res) {

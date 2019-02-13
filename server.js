@@ -11,6 +11,10 @@ var PORT = process.env.PORT || 3000;
 var passport = require("passport");
 var session = require("express-session");
 
+// Custom CSS and JS Served to Handlebars
+var path = require("path");
+app.use(express.static(path.join(__dirname, "/public")));
+
 // Middleware
 app.use(express.urlencoded({
 	extended: false
