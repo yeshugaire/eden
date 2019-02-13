@@ -26,7 +26,7 @@ $(function () {
 		var eventType = $(this).data("type");
 		var dataId = $(this).data("id");
 		var userName = $(this).data("username");
-		var days = $(".form-check-input:checked").map(function () {
+		var days = $("." + eventName + ":checked").map(function () {
 			return this.value;
 		}).get().join(",");
 
