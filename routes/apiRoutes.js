@@ -23,10 +23,14 @@ module.exports = function (app) {
 		});
 	});
 
-	// Events Database
-	app.get("/api/events/", function(req, res) {
+	// Get User Events
+	app.get("/api/events/:id", function(req, res) {
 		// console.log(req.user.id);
-		db.Event.findAll({}).then(function(dbEvents) {
+		db.Event.findAll({
+			where: {
+				UserId: req.params.id
+			}
+		}).then(function(dbEvents) {
 			res.json(dbEvents);
 		});
 	});

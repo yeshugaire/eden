@@ -1,7 +1,7 @@
 $(function () {
 
 	// GET Events
-	$.get("/api/events").done(function(doc) {
+	$.get("/api/events/" + $(".userinfo").data("id")).done(function(doc) {
 		var event = Array();
 		$.each(doc, function(i, entry) {
 			event.push({
@@ -30,7 +30,6 @@ $(function () {
 		var days = $("." + eventName + ":checked").map(function () {
 			return this.value;
 		}).get().join(",");
-
 
 		console.log(days);
 		$.post("/api/events", {

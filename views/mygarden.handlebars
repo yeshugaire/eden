@@ -24,6 +24,7 @@
 					<h3>Your Plants</h3>
 				</caption>
 				<tbody>
+					<div class="userinfo" data-id="{{dataUser.id}}"></div>
 					{{#each myPlants}}
 						<tr class="plantRow">
 							<td data-th=""><a href="/plants/{{this.id}}"><img src="{{this.image_path}}" width="100" height="100" class="thumb"></a>
