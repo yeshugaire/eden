@@ -12,19 +12,6 @@ module.exports = function (app) {
 		res.render("index");
 	});
 
-	// Load example page and pass in an example by id
-	app.get("/example/:id", function (req, res) {
-		db.Example.findOne({
-			where: {
-				id: req.params.id
-			}
-		}).then(function (dbExample) {
-			res.render("example", {
-				example: dbExample
-			});
-		});
-	});
-
 	// Auth Get Routes
 	app.get("/signup", function (req, res) {
 		res.render("signup");
@@ -49,14 +36,17 @@ module.exports = function (app) {
 			},
 			include: [db.Plant, db.Event]
 		}).then(function (data) {
-			console.log(data);
 			var hbsObject1 = data.dataValues.Plants;
 			var hbsObject2 = data.dataValues.Events;
-			console.log(hbsObject1);
-			console.log(hbsObject2);
+			var hbsObject3 = {
+				id: req.user.id,
+				username: req.user.username
+			};
+			console.log(hbsObject3);
 			res.render("mygarden", {
 				myPlants: hbsObject1,
-				myEvents: hbsObject2
+				myEvents: hbsObject2,
+				dataUser: hbsObject3
 			});
 		});
 	});
@@ -157,7 +147,6 @@ module.exports = function (app) {
 			},
 			include: db.User
 		}).then(function (data) {
-			console.log(data.dataValues.User.dataValues.username + "!!!!!!!!!!!!!!!!!!!!!");
 			var hbsObject = data.dataValues;
 			console.log(hbsObject);
 			res.render("plants", {
