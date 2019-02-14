@@ -47,5 +47,20 @@ $(function () {
 			window.location.href = "/mygarden/" + userName;
 		});
 	});
+
+	// DELETE Events
+	$(".resetEvents").on("click", function() {
+		var userId = $(this).data("id");
+		var eventName = $(this).data("name");
+		var eventType = $(this).data("type");
+		var userName = $(this).data("username");
+		$.ajax({
+			method: "DELETE",
+			url: "/api/events/" + userId + "&" + eventName + "&" + eventType
+		}).then(function() {
+			window.location.href = "/mygarden/" + userName;
+		});
+	});
+
 });
 

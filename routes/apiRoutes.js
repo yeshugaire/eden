@@ -40,10 +40,16 @@ module.exports = function (app) {
 		});
 	});
 
-	// Delete an example by id
-	// app.delete("/api/examples/:id", function(req, res) {
-	//   db.Example.destroy({ where: { id: req.params.id } }).then(function(dbExample) {
-	//     res.json(dbExample);
-	//   });
-	// });
+	// Delete Event by ID
+	app.delete("/api/events/:id&:event_name&:event_type", function(req, res) {
+		db.Event.destroy({
+			where: {
+				UserId: req.params.id,
+				event_name: req.params.event_name,
+				event_type: req.params.event_type
+			}
+		}).then(function(dbEvent) {
+			res.json(dbEvent);
+		});
+	});
 };
