@@ -1,20 +1,56 @@
+// save variables for future use
+var personalName;
+
 // when they click on add a plant
 $("#addAPlant").on("click", function (event) {
 	event.preventDefault();
 	// save inputs from form
 	var plantName = $("#plantName").val().trim();
-	var personalName = $("#personalName");
+	personalName = $("#personalName").val().trim();
 
 	// if no common or scientific name
 	if (plantName.length === 0) {
 		// post request to add plant to database
-		$.post("/addUnknownPlant", {personalName: personalName}).then(function() {
+		$.post("/addPlant", {personalName: personalName}).then(function() {
 			console.log("plant added to garden");
 		});
 		// if common or scientific name is provided
 	} else {
+		// pull up modal
+		$(".modal").css("display", "block");
+
 		// get request to search garden.org for plant
-		$.get("/searchplant/"+ plantName).then(function() {
-			console.log("searching garden.org for plant info")
-		})
-})
+		$.get("/searchplant/"+ plantName).then(function(res) {
+			// loop over search results and append to modal table
+			for (i=0; i<res.plants.length-1; i++) {
+				var newRow = $("<tr data-link=" + res.plants[i].link+ " class='possiblePlant'></tr>");
+				var newCell = $("<td>" + res.plants[i].plantName + "</td>");
+				newRow.append(newCell);
+				$("#possiblePlantsTable").append(newRow);
+			}
+
+			// remove search message
+			$("#searchMessage").remove();
+		});
+	}
+});
+
+$(document.body).on("click", ".possiblePlant", function(){
+	// save info for post request
+	var link = $(this).attr("data-link");
+	var plantName = $(this).text();
+	var plant = {
+		plantName: plantName,
+		personalName : personalName,
+		link: link
+	};
+	// post request for plant info and add plant to database
+	$.post("/addPlant", plant, function(res) {
+		console.log("adding plant to your garden");
+
+		// redirect to plant view
+		$("body").replaceWith(res);
+	});
+	// hide modal
+	$(".modal").css("display", "none");
+});

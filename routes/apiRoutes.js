@@ -17,25 +17,29 @@ module.exports = function (app) {
 	});
 
 	// Add Event to Calendar Post Route
-	app.post("/api/events", function(req, res) {
-		db.Event.create(req.body).then(function(dbEvents) {
+	app.post("/api/events", function (req, res) {
+		db.Event.create(req.body).then(function (dbEvents) {
 			res.json(dbEvents);
 		});
 	});
 
 	// Get All Users
-	app.get("/api/users", function(req, res) {
+	app.get("/api/users", function (req, res) {
 		db.User.findAll({
 			include: [db.Plant]
-		}).then(function(dbUser) {
+		}).then(function (dbUser) {
 			res.json(dbUser);
 		});
 	});
 
-	// Delete an example by id
-	// app.delete("/api/examples/:id", function(req, res) {
-	//   db.Example.destroy({ where: { id: req.params.id } }).then(function(dbExample) {
-	//     res.json(dbExample);
-	//   });
-	// });
+	// Delete an plant by id
+	app.delete("/api/plants/:id", function (req, res) {
+		db.Plant.destroy({
+			where: {
+				id: req.params.id
+			}
+		}).then(function (dbPlant) {
+			res.json(dbPlant);
+		});
+	});
 };
