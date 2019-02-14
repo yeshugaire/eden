@@ -3,6 +3,9 @@ var axios = require("axios");
 var cheerio = require("cheerio");
 var passport = require("passport");
 
+// save userId for future use
+var userId;
+
 module.exports = function (app) {
 	// Load index page
 	app.get("/", function (req, res) {
@@ -24,6 +27,9 @@ module.exports = function (app) {
 
 	// User's Garden
 	app.get("/mygarden/:username", isLoggedIn, function (req, res) {
+		// save userId for add plant
+		userId = req.user.id;
+
 		db.User.findOne({
 			where: {
 				id: req.user.id
@@ -46,45 +52,62 @@ module.exports = function (app) {
 	});
 
 	// route for searching plants on garden.org
-	// app.get("/searchPlant/:plantName", function (req, res) {
-	// 	// call to garden.org for plant search
-	// 	axios.get("https://garden.org/plants/search/text/?q=" + req.params.plantName).then(function (body) {
-	// 		// scrape html for possible plant names and links
-	// 		var $ = cheerio.load(body.data);
+	app.get("/searchPlant/:plantName", function (req, res) {
+		// call to garden.org for plant search
+		axios.get("https://garden.org/plants/search/text/?q=" + req.params.plantName).then(function (body) {
+			// scrape html for possible plant names and links
+			var $ = cheerio.load(body.data);
 
-	// 		// save plant names
-	// 		var plantOptions = $("tr").text().split(")");
+			// save plant names
+			var plantOptions = $("tr").text().split(")");
 
-	// 		// save links
-	// 		var plantLinks = [];
-	// 		$("td a").each(function (i, elm) {
-	// 			$(this).remove();
-	// 			plantLinks.push($(this).attr("href"));
-	// 		});
-	// 		// remove duplicates from links
-	// 		var uniquePlantLinks = [];
-	// 		for(var i = 0; i < plantLinks.length; i++){
-	// 			if(uniquePlantLinks.indexOf(plantLinks[i]) === -1){
-	// 				uniquePlantLinks.push(plantLinks[i]);
-	// 			}
-	// 		}
+			// save links
+			var plantLinks = [];
+			$("td a").each(function (i, elm) {
+				// $(this).remove();
+				plantLinks.push($(this).attr("href"));
+			});
+			// remove duplicates from links
+			var uniquePlantLinks = [];
+			for(i = 0; i < plantLinks.length; i++){
+				if(uniquePlantLinks.indexOf(plantLinks[i]) === -1){
+					uniquePlantLinks.push(plantLinks[i]);
+				}
+			}
 
-	// 		// save data as object for handlebars
-	// 		var searchOptions = [];
-	// 		for (i = 0; i < plantOptions.length; i++) {
-	// 			var plant = {
-	// 				plantName: plantOptions[i] + ")",
-	// 				link: uniquePlantLinks[i]
-	// 			};
-	// 			searchOptions.push(plant);
-	// 		}
-	// 	});
-	// });
+			// save data as object for handlebars
+			var searchOptions = [];
+			for (i=0; i<plantOptions.length; i++) {
+				var plant = {
+					plantName: plantOptions[i] + ")",
+					link: uniquePlantLinks[i]
+				};
+				searchOptions.push(plant);
+			}
+			var possiblePlants = {
+				plants: searchOptions
+			};
+
+			//render search options in my garden view
+			res.send(possiblePlants);
+		});
+	});
 
 	// route for adding new plant from garden.org to plants table in database
 	app.post("/addPlant", function (req, res) {
+		// if no common or scientific name provided
+		if(!req.body.plantName){
+			// add plant to database
+			return db.Plant.create({
+				personal_name: req.body.personalName,
+				UserId: userId
+			}).then(function(data) {
+				// send plant view to front end for redirect
+				res.send("/plants/" + data.id);
+			});
+		}
 		// call to garden.org for plant info
-		axios.get("https://garden.org/plants/view/83101/Water-Primrose-Ludwigia-peploides/")
+		axios.get("https://garden.org" + req.body.link)
 			.then(function (body) {
 				// scrape html for plant info tables
 				var $ = cheerio.load(body.data);
@@ -98,8 +121,21 @@ module.exports = function (app) {
 						plantInfoTables += $(this).html();
 					}
 				});
-				// log plant info tables
-				console.log(plantInfoTables);
+
+				// save img of plant
+				var plantImg = "https://garden.org" + $("center img").attr("src");
+
+				// add plant and info to database
+				db.Plant.create({
+					plant_name: req.body.plantName,
+					personal_name: req.body.personalName,
+					data: plantInfoTables,
+					image_path: plantImg,
+					UserId: userId
+				}).then(function(data){
+					// send plant view to front end for redirect
+					res.send("/plants/" + data.id);
+				});
 			});
 	});
 
@@ -108,7 +144,8 @@ module.exports = function (app) {
 		db.Plant.findOne({
 			where: {
 				id: req.params.id
-			}
+			},
+			include: db.User
 		}).then(function (data) {
 			var hbsObject = data.dataValues;
 			console.log(hbsObject);

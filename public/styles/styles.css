@@ -7,3 +7,16 @@ caption {
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
 }
+
+.modal {
+  width: 80%;
+  opacity: 1;
+  background-color: white;
+  margin: auto;
+  overflow: auto;
+  text-align: center
+}
+
+.plantImg {
+  height: 300 px;
+}

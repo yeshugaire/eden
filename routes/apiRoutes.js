@@ -17,8 +17,8 @@ module.exports = function (app) {
 	});
 
 	// Add Event to Calendar Post Route
-	app.post("/api/events", function(req, res) {
-		db.Event.create(req.body).then(function(dbEvents) {
+	app.post("/api/events", function (req, res) {
+		db.Event.create(req.body).then(function (dbEvents) {
 			res.json(dbEvents);
 		});
 	});
@@ -36,13 +36,14 @@ module.exports = function (app) {
 	});
 
 	// Get All Users
-	app.get("/api/users", function(req, res) {
+	app.get("/api/users", function (req, res) {
 		db.User.findAll({
 			include: [db.Plant]
-		}).then(function(dbUser) {
+		}).then(function (dbUser) {
 			res.json(dbUser);
 		});
 	});
+
 
 	// Delete Event by ID
 	app.delete("/api/events/:id&:event_name&:event_type", function(req, res) {
@@ -54,6 +55,15 @@ module.exports = function (app) {
 			}
 		}).then(function(dbEvent) {
 			res.json(dbEvent);
+
+	// Delete an plant by id
+	app.delete("/api/plants/:id", function (req, res) {
+		db.Plant.destroy({
+			where: {
+				id: req.params.id
+			}
+		}).then(function (dbPlant) {
+			res.json(dbPlant);
 		});
 	});
 };
