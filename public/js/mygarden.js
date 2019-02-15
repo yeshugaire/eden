@@ -21,6 +21,7 @@ $("#addAPlant").on("click", function (event) {
 
 		// get request to search garden.org for plant
 		$.get("/searchplant/"+ plantName).then(function(res) {
+			console.log(res.plants);
 			// loop over search results and append to modal table
 			for (i=0; i<res.plants.length-1; i++) {
 				var newRow = $("<tr data-link=" + res.plants[i].link+ " class='possiblePlant'></tr>");
@@ -49,7 +50,7 @@ $(document.body).on("click", ".possiblePlant", function(){
 		console.log("adding plant to your garden");
 
 		// redirect to plant view
-		$("body").replaceWith(res);
+		window.location.href = res;
 	});
 	// hide modal
 	$(".modal").css("display", "none");

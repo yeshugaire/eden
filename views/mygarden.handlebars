@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 	<a class="navbar-brand" href="/"><img src="/images/logo.PNG" alt="HTML5 Icon" style="width:75px;height:75px;"></a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-	 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
 	</button>
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -26,45 +26,58 @@
 				<tbody>
 					<div class="userinfo" data-id="{{dataUser.id}}"></div>
 					{{#each myPlants}}
-						<tr class="plantRow">
-							<td data-th=""><a href="/plants/{{this.id}}"><img src="{{this.image_path}}" width="100" height="100" class="thumb"></a>
-							</td>
-							<td data-th="" class="col-8"><a href="/plants/{{this.id}}">{{this.plant_name}} {{this.personal_name}}</a></td>
-							<td>
-								<form class="dateForm">
-									<div class="form-check form-check-inline">
-										<input class="form-check-input {{this.plant_name}}" type="checkbox" id="inlineCheckbox0" value=0>
-										<label class="form-check-label" for="inlineCheckbox0">Sun</label>
-									</div>
-									<div class="form-check form-check-inline">
-										<input class="form-check-input {{this.plant_name}}" type="checkbox" data-name="{{this.plant_name}}" id="inlineCheckbox1" value=1>
-										<label class="form-check-label" for="inlineCheckbox1">Mon</label>
-									</div>
-									<div class="form-check form-check-inline">
-										<input class="form-check-input {{this.plant_name}}" type="checkbox" data-name="{{this.plant_name}}" id="inlineCheckbox2" value=2>
-										<label class="form-check-label" for="inlineCheckbox2">Tue</label>
-									</div>
-									<div class="form-check form-check-inline">
-										<input class="form-check-input {{this.plant_name}}" type="checkbox" data-name="{{this.plant_name}}" id="inlineCheckbox3" value=3>
-										<label class="form-check-label" for="inlineCheckbox4">Wed</label>
-									</div>
-									<div class="form-check form-check-inline">
-										<input class="form-check-input {{this.plant_name}}" type="checkbox" data-name="{{this.plant_name}}" id="inlineCheckbox4" value=4>
-										<label class="form-check-label" for="inlineCheckbox5">Thu</label>
-									</div>
-									<div class="form-check form-check-inline">
-										<input class="form-check-input {{this.plant_name}}" type="checkbox" data-name="{{this.plant_name}}" id="inlineCheckbox5" value=5>
-										<label class="form-check-label" for="inlineCheckbox5">Fri</label>
-									</div>
-									<div class="form-check form-check-inline">
-										<input class="form-check-input {{this.plant_name}}" type="checkbox" data-name="{{this.plant_name}}" id="inlineCheckbox6" value=6>
-										<label class="form-check-label" for="inlineCheckbox3">Sat</label>
-									</div>
-									<button type="submit" class="addEvent" data-name="{{this.plant_name}}" data-type="water" data-id="{{../dataUser.id}}" data-username="{{../dataUser.username}}">Add to Calendar</button>
-									<button class="resetEvents" data-name="{{this.plant_name}}" data-type="water" data-id={{../dataUser.id}} data-username="{{../dataUser.username}}">Reset Events for this Plant</button>
-								</form>
-							</td>
-						</tr>
+					<tr class="plantRow">
+						<td data-th=""><a href="/plants/{{this.id}}"><img src="{{this.image_path}}" width="100"
+									height="100" class="thumb"></a>
+						</td>
+						<td data-th="" class="col-8"><a href="/plants/{{this.id}}">{{this.plant_name}}
+								{{this.personal_name}}</a></td>
+						<td>
+							<form class="dateForm">
+								<div class="form-check form-check-inline">
+									<input class="form-check-input {{this.plant_name}}" type="checkbox"
+										id="inlineCheckbox0" value=0>
+									<label class="form-check-label" for="inlineCheckbox0">Sun</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input {{this.plant_name}}" type="checkbox"
+										data-name="{{this.plant_name}}" id="inlineCheckbox1" value=1>
+									<label class="form-check-label" for="inlineCheckbox1">Mon</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input {{this.plant_name}}" type="checkbox"
+										data-name="{{this.plant_name}}" id="inlineCheckbox2" value=2>
+									<label class="form-check-label" for="inlineCheckbox2">Tue</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input {{this.plant_name}}" type="checkbox"
+										data-name="{{this.plant_name}}" id="inlineCheckbox3" value=3>
+									<label class="form-check-label" for="inlineCheckbox4">Wed</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input {{this.plant_name}}" type="checkbox"
+										data-name="{{this.plant_name}}" id="inlineCheckbox4" value=4>
+									<label class="form-check-label" for="inlineCheckbox5">Thu</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input {{this.plant_name}}" type="checkbox"
+										data-name="{{this.plant_name}}" id="inlineCheckbox5" value=5>
+									<label class="form-check-label" for="inlineCheckbox5">Fri</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input {{this.plant_name}}" type="checkbox"
+										data-name="{{this.plant_name}}" id="inlineCheckbox6" value=6>
+									<label class="form-check-label" for="inlineCheckbox3">Sat</label>
+								</div>
+								<button type="submit" class="addEvent" data-name="{{this.plant_name}}" data-type="water"
+									data-id="{{../dataUser.id}}" data-username="{{../dataUser.username}}">Add to
+									Calendar</button>
+								<button class="resetEvents" data-name="{{this.plant_name}}" data-type="water"
+									data-id={{../dataUser.id}} data-username="{{../dataUser.username}}">Reset Events for
+									this Plant</button>
+							</form>
+						</td>
+					</tr>
 					{{/each}}
 				</tbody>
 			</table>
@@ -112,12 +125,13 @@
 				</caption>
 				<tbody>
 					{{#each myPlants}}
-						<tr>
-							<td data-th=""><a href="/plants/{{this.id}}"><img
-									src="{{this.image_path}}" width="100" height="100" class="thumb"></a>
-							</td>
-							<td data-th="" class="col-8"><a href="/plants/{{this.id}}" >{{this.plant_name}} <br> {{this.personal_name}}</a></td>
-						</tr>
+					<tr>
+						<td data-th=""><a href="/plants/{{this.id}}"><img src="{{this.image_path}}" width="100"
+									height="100" class="thumb"></a>
+						</td>
+						<td data-th="" class="col-8"><a href="/plants/{{this.id}}">{{this.plant_name}} <br>
+								{{this.personal_name}}</a></td>
+					</tr>
 					{{/each}}
 				</tbody>
 			</table>
@@ -131,30 +145,14 @@
 			<h3>Possible Plants</h3>
 			<small>Click the plant you are trying to add</small>
 		</caption>
-		<tbody>
-			{{#each possiblePlants}}
-			<tr id="possiblePlant" data-link="https://garden.org" +{{link}}>
-				<td data-th="">
-					<img src="'" + {{this.picture}} + "'" width="100" height="100" class="thumb"></a>
-				</td>
-				<td data-th="" class="col-8">{{plantName}}</td>
-			</tr>
-			{{/each}}
-		</tbody>
+		<tbody id="possiblePlantsTable"></tbody>
 	</table>
-				<caption class="bg-success text-light">
-					<h3>Possible Plants</h3>
-					<small>Click the plant you are trying to add</small>
-				</caption>
-				<tbody id="possiblePlantsTable"></tbody>
-			</table>
-			<h2 id="searchMessage">Searching for your plant...</h2>
+	<h2 id="searchMessage">Searching for your plant...</h2>
 </div>
-
 
 {{!-- jQuery --}}
 <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
- crossorigin="anonymous"></script>
+	crossorigin="anonymous"></script>
 <!-- Moment.js -->
 <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
 {{!-- Fullcalendar.io JS--}}
