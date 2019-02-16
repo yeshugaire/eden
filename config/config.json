@@ -3,7 +3,7 @@
     "username": "root",
     "password": "Ildhcmfam226!",
     "port": "3306",
-    "database": "user_db",
+    "database": "testdb",
     "host": "localhost",
     "dialect": "mysql"
   },

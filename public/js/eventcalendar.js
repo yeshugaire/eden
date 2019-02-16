@@ -24,10 +24,11 @@ $(function () {
 		event.preventDefault();
 		event.stopImmediatePropagation();
 		var eventName = $(this).data("name");
+		var calendarName = eventName.split(" ")[0];
 		var eventType = $(this).data("type");
 		var dataId = $(this).data("id");
 		var userName = $(this).data("username");
-		var days = $("." + eventName + ":checked").map(function () {
+		var days = $("." + calendarName + ":checked").map(function () {
 			return this.value;
 		}).get().join(",");
 
@@ -62,4 +63,3 @@ $(function () {
 	});
 
 });
-

@@ -1,3 +1,58 @@
+/* Base Styles */
+html,
+body {
+    background-image: url("../images/prism.png");
+    font-family: "Open Sans", sans-serif;
+}
+
+/* Logo Font */
+.logo-font {
+  font-family: "Yellowtail", sans-serif;
+  font-size: 64px;
+  font-weight: bolder;
+}
+
+/* Index Page Jumbotron */
+.jumbotron {
+  background-image: url("../images/prism.png");
+  color: white;
+}
+
+/* Navbar */
+.navbar {
+  background-image: url("../images/prism.png");
+  color: white;
+}
+
+.white-link {
+  color: white;
+}
+
+/* Footer */
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+/* Authorization */
+.auth-panel {
+  margin-top: 150px;
+  color: white;
+}
+
+/* Buttons */
+.btn {
+  background-color: #78B70C;
+  color: white;
+}
+
+/* Calendar */
+#calendar {
+  background-color: white;
+}
+
 .list-group-item {
   line-height: 2.5;
 }
