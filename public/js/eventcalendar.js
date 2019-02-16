@@ -13,27 +13,35 @@ $(function () {
 		$("#calendar").fullCalendar({
 			defaultView: "basicWeek",
 			aspectRatio: 2.5,
-			eventColor: "aqua",
+			eventColor: "#78B70C",
 			events: event,
 			displayEventTime: false
 		});
 	});
+
+	// Date Modal Display
+	// $(".add-to-calendar").on("click", function(event) {
+	// 	event.preventDefault();
+	// 	console.log("WTF");
+	// 	$(".dateModal").css("display, block");
+	// });
 
 	// POST New Events
 	$(".addEvent").on("click", function(event) {
 		event.preventDefault();
 		event.stopImmediatePropagation();
 		var eventName = $(this).data("name");
+		var calendarName = eventName.trim().split(" ")[0];
 		var eventType = $(this).data("type");
 		var dataId = $(this).data("id");
 		var userName = $(this).data("username");
-		var days = $("." + eventName + ":checked").map(function () {
+		var days = $("." + calendarName + ":checked").map(function () {
 			return this.value;
 		}).get().join(",");
 
 		console.log(days);
 		$.post("/api/events", {
-			event_name: eventName,
+			event_name: calendarName,
 			event_type: eventType,
 			time_start: "00:00",
 			time_end: "23:59",
@@ -48,9 +56,10 @@ $(function () {
 	});
 
 	// DELETE Events
-	$(".resetEvents").on("click", function() {
+	$(".resetEvents").on("click", function(event) {
+		event.preventDefault();
 		var userId = $(this).data("id");
-		var eventName = $(this).data("name");
+		var eventName = $(this).data("name").trim().split(" ")[0];
 		var eventType = $(this).data("type");
 		var userName = $(this).data("username");
 		$.ajax({
@@ -62,4 +71,3 @@ $(function () {
 	});
 
 });
-
