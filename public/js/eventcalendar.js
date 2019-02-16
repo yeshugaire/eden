@@ -56,9 +56,10 @@ $(function () {
 	});
 
 	// DELETE Events
-	$(".resetEvents").on("click", function() {
+	$(".resetEvents").on("click", function(event) {
+		event.preventDefault();
 		var userId = $(this).data("id");
-		var eventName = $(this).data("name");
+		var eventName = $(this).data("name").trim().split(" ")[0];
 		var eventType = $(this).data("type");
 		var userName = $(this).data("username");
 		$.ajax({
