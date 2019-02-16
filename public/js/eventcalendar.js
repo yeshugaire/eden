@@ -24,7 +24,7 @@ $(function () {
 		event.preventDefault();
 		event.stopImmediatePropagation();
 		var eventName = $(this).data("name");
-		var calendarName = eventName.split(" ")[0];
+		var calendarName = eventName.trim().split(" ")[0];
 		var eventType = $(this).data("type");
 		var dataId = $(this).data("id");
 		var userName = $(this).data("username");
