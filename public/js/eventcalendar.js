@@ -13,7 +13,7 @@ $(function () {
 		$("#calendar").fullCalendar({
 			defaultView: "basicWeek",
 			aspectRatio: 2.5,
-			eventColor: "aqua",
+			eventColor: "#78B70C",
 			events: event,
 			displayEventTime: false
 		});
@@ -34,7 +34,7 @@ $(function () {
 
 		console.log(days);
 		$.post("/api/events", {
-			event_name: eventName,
+			event_name: calendarName,
 			event_type: eventType,
 			time_start: "00:00",
 			time_end: "23:59",
