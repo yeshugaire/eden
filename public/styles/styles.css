@@ -62,15 +62,25 @@ body {
 }
 
 /* Date Modal */
-.dateModal {
+/* .dateModal {
   display: none;
-  /* position: fixed; */
+  position: fixed;
   z-index: 1;
   left: 0;
   top: 0;
   width: 500px; 
   height: 500px; 
   overflow: auto; 
+} */
+
+/* Date Selection */
+.form-choice {
+  margin-right: 8px;
+  margin-bottom: 10px;
+}
+
+.form-check-lable {
+  padding: 2px;
 }
 
 /* Panel Headers */
