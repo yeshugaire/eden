@@ -17,7 +17,7 @@ $("#addAPlant").on("click", function (event) {
 		// if common or scientific name is provided
 	} else {
 		// pull up modal
-		$(".modal").css("display", "block");
+		$(".add-plant-modal").css("display", "block");
 
 		// get request to search garden.org for plant
 		$.get("/searchplant/"+ plantName).then(function(res) {

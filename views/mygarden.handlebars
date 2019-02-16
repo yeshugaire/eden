@@ -1,13 +1,13 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 	<a class="navbar-brand" href="/"><img src="/images/logo.PNG" alt="HTML5 Icon" style="width:75px;height:75px;"></a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-		aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
 	</button>
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item active">
-				<a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+				<a class="nav-link" href="/"><span class="white-link">Home</span><span class="sr-only">(current)</span></a>
 			</li>
 		</ul>
 		<div>
@@ -17,65 +17,69 @@
 </nav>
 
 <div class="container">
-	<div class="row my-4">
-		
+	<div class="row content-row my-4">
+
 		<div id="plantsDiv" class="col-6">
 			<table class="table table-striped table-bordered table-hover pretty-table" id="plantTable">
-				<caption class="bg-success text-light">
+				<caption class="text-light panel-header text-center">
 					<h3>Your Plants</h3>
 				</caption>
-				<tbody>
+				<tbody class="your-plants-table">
 					<div class="userinfo" data-id="{{dataUser.id}}"></div>
 					{{#each myPlants}}
 					<tr class="plantRow">
-						<td data-th=""><a href="/plants/{{this.id}}"><img src="{{this.image_path}}" width="100"
-									height="100" class="thumb"></a>
+						<td data-th=""><a href="/plants/{{this.id}}"><img src="{{this.image_path}}" width="100" height="100" class="thumb"></a>
 						</td>
 						<td data-th="" class="col-8"><a href="/plants/{{this.id}}">{{this.plant_name}}
 								{{this.personal_name}}</a></td>
 						<td>
 							<form class="dateForm">
-								<div class="form-check form-check-inline">
-									<input class="form-check-input {{this.plant_name}}" type="checkbox"
-										id="inlineCheckbox0" value=0>
-									<label class="form-check-label" for="inlineCheckbox0">Sun</label>
+
+								<div class="dateModal modal modal-fade" data-toggle="modal">
+									<div class="form-check form-check-inline">
+										<input class="form-check-input {{this.plant_name}}" type="checkbox" id="inlineCheckbox0" value=0>
+										<label class="form-check-label" for="inlineCheckbox0">Sun</label>
+									</div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input {{this.plant_name}}" type="checkbox" data-name="{{this.plant_name}}" id="inlineCheckbox1"
+										 value=1>
+										<label class="form-check-label" for="inlineCheckbox1">Mon</label>
+									</div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input {{this.plant_name}}" type="checkbox" data-name="{{this.plant_name}}" id="inlineCheckbox2"
+										 value=2>
+										<label class="form-check-label" for="inlineCheckbox2">Tue</label>
+									</div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input {{this.plant_name}}" type="checkbox" data-name="{{this.plant_name}}" id="inlineCheckbox3"
+										 value=3>
+										<label class="form-check-label" for="inlineCheckbox3">Wed</label>
+									</div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input {{this.plant_name}}" type="checkbox" data-name="{{this.plant_name}}" id="inlineCheckbox4"
+										 value=4>
+										<label class="form-check-label" for="inlineCheckbox4">Thu</label>
+									</div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input {{this.plant_name}}" type="checkbox" data-name="{{this.plant_name}}" id="inlineCheckbox5"
+										 value=5>
+										<label class="form-check-label" for="inlineCheckbox5">Fri</label>
+									</div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input {{this.plant_name}}" type="checkbox" data-name="{{this.plant_name}}" id="inlineCheckbox6"
+										 value=6>
+										<label class="form-check-label" for="inlineCheckbox6">Sat</label>
+									</div>
+									<button type="submit" class="addEvent btn" data-name="{{this.plant_name}}" data-type="Water" data-id="{{../dataUser.id}}"
+									 data-username="{{../dataUser.username}}">Add to
+										Calendar</button>
 								</div>
-								<div class="form-check form-check-inline">
-									<input class="form-check-input {{this.plant_name}}" type="checkbox"
-										data-name="{{this.plant_name}}" id="inlineCheckbox1" value=1>
-									<label class="form-check-label" for="inlineCheckbox1">Mon</label>
-								</div>
-								<div class="form-check form-check-inline">
-									<input class="form-check-input {{this.plant_name}}" type="checkbox"
-										data-name="{{this.plant_name}}" id="inlineCheckbox2" value=2>
-									<label class="form-check-label" for="inlineCheckbox2">Tue</label>
-								</div>
-								<div class="form-check form-check-inline">
-									<input class="form-check-input {{this.plant_name}}" type="checkbox"
-										data-name="{{this.plant_name}}" id="inlineCheckbox3" value=3>
-									<label class="form-check-label" for="inlineCheckbox4">Wed</label>
-								</div>
-								<div class="form-check form-check-inline">
-									<input class="form-check-input {{this.plant_name}}" type="checkbox"
-										data-name="{{this.plant_name}}" id="inlineCheckbox4" value=4>
-									<label class="form-check-label" for="inlineCheckbox5">Thu</label>
-								</div>
-								<div class="form-check form-check-inline">
-									<input class="form-check-input {{this.plant_name}}" type="checkbox"
-										data-name="{{this.plant_name}}" id="inlineCheckbox5" value=5>
-									<label class="form-check-label" for="inlineCheckbox5">Fri</label>
-								</div>
-								<div class="form-check form-check-inline">
-									<input class="form-check-input {{this.plant_name}}" type="checkbox"
-										data-name="{{this.plant_name}}" id="inlineCheckbox6" value=6>
-									<label class="form-check-label" for="inlineCheckbox3">Sat</label>
-								</div>
-								<button type="submit" class="addEvent" data-name="{{this.plant_name}}" data-type="Water"
-									data-id="{{../dataUser.id}}" data-username="{{../dataUser.username}}">Add to
+
+								<button type="submit" class="add-to-calendar btn" data-name="{{this.plant_name}}" data-type="Water" data-id="{{../dataUser.id}}"
+								 data-username="{{../dataUser.username}}">Add to
 									Calendar</button>
-								<button class="resetEvents" data-name="{{this.plant_name}}" data-type="Water"
-									data-id={{../dataUser.id}} data-username="{{../dataUser.username}}">Reset Events for
-									this Plant</button>
+								<button class="resetEvents btn" data-name="{{this.plant_name}}" data-type="Water" data-id={{../dataUser.id}}
+								 data-username="{{../dataUser.username}}">Reset Events</button>
 							</form>
 						</td>
 					</tr>
@@ -87,14 +91,9 @@
 		<div class="col-6">
 
 			<div class="row">
-				<div id="calendar" class="text-center">
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="add-plant">
-					<form class="border rounded col-12 px-0">
-						<div class="card-header bg-success text-light">
+				<div class="add-plant-div">
+					<form class="rounded col-12 px-0 add-plant-form">
+						<div class="card-header text-light text-center panel-header">
 							<h2>Add a Plant</h2>
 						</div>
 						<div class="form-group px-4 pt-4">
@@ -105,29 +104,25 @@
 							<label for="personal name">Personal Name</label>
 							<input type="text" class="form-control" id="personalName" placeholder="e.g. Planty McPlantface">
 						</div>
-						<button type="submit" class="btn btn-lg btn-success ml-4 mt-4" id="addAPlant">Add a Plant</button>
+						<button type="submit" class="btn btn-lg ml-4 mt-4" id="addAPlant">Add Plant</button>
 					</form>
+				</div>
+			</div>
+
+			<div class="row">
+				<div id="calendar" class="text-center">
 				</div>
 			</div>
 
 		</div>
 
-		
-
-	</div>
-
-
-	<div class="row">
-
-		
-
 	</div>
 
 </div>
 
-<div class="modal modal-fade">
+<div class="modal modal-fade add-plant-modal">
 	<table class="table table-striped table-bordered table-hover pretty-table" id="plantTable">
-		<caption class="bg-success text-light">
+		<caption class="panel-header text-light text-center">
 			<h3>Possible Plants</h3>
 			<small>Click the plant you are trying to add</small>
 		</caption>
@@ -138,7 +133,7 @@
 
 {{!-- jQuery --}}
 <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-	crossorigin="anonymous"></script>
+ crossorigin="anonymous"></script>
 <!-- Moment.js -->
 <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
 {{!-- Fullcalendar.io JS--}}

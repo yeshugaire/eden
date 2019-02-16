@@ -28,6 +28,11 @@ body {
   color: white;
 }
 
+/* Content Section */
+.content-row {
+  margin-bottom: 40px;
+}
+
 /* Footer */
 .footer {
   position: fixed;
@@ -46,16 +51,74 @@ body {
 .btn {
   background-color: #78B70C;
   color: white;
+  margin-bottom: 10px;
 }
 
 /* Calendar */
 #calendar {
-  background-color: white;
+  background-color: rgb(158, 171, 137);
+  margin-top: 15px;
+  padding: 10px;
+}
+
+/* Date Modal */
+.dateModal {
+  display: none;
+  /* position: fixed; */
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 500px; 
+  height: 500px; 
+  overflow: auto; 
+}
+
+/* Panel Headers */
+.panel-header {
+  background-color: #78B70C;
+}
+
+/* Add Plant */
+.add-plant-div {
+  width: 100%;
+  background-color: rgb(158, 171, 137);
+}
+
+.add-plant-form {
+  border: none;
+}
+
+#addAPlant {
+  padding: 10px;
   margin-bottom: 10px;
+}
+
+/* Your Plants */
+#plantsDiv {
+  height: 660px;
+  overflow: scroll;
+}
+
+.your-plants-table {
+  background-color: rgb(158, 171, 137);
 }
 
 .list-group-item {
   line-height: 2.5;
+}
+
+/* Plant View */
+.plant-container {
+  color: white;
+}
+
+#deletePlant {
+  margin-top: 10px;
+}
+
+.plant-info-table {
+  margin-bottom: 40px;
+  background-color: rgb(158, 171, 137);
 }
 
 caption {

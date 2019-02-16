@@ -19,6 +19,13 @@ $(function () {
 		});
 	});
 
+	// Date Modal Display
+	$(".add-to-calendar").on("click", function(event) {
+		event.preventDefault();
+		console.log("WTF");
+		$(".dateModal").css("display, block");
+	});
+
 	// POST New Events
 	$(".addEvent").on("click", function(event) {
 		event.preventDefault();
