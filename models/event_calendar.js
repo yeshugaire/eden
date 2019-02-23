@@ -33,11 +33,6 @@ module.exports = function(sequelize, DataTypes) {
 			defaultValue: "23:59"
 		},
 
-		// daysOfWeek: {
-		// 	type: DataTypes.JSON,
-		// 	allowNull: false
-		// },
-
 		daysOfWeek: {
 			type: DataTypes.STRING,
 			allowNull: false

@@ -75,7 +75,7 @@ module.exports = function (app) {
 				}
 			}
 
-			// save data as object for handlebars
+			// save data as object
 			var searchOptions = [];
 			for (i=0; i<plantOptions.length; i++) {
 				var plant = {
@@ -97,6 +97,7 @@ module.exports = function (app) {
 	app.post("/addPlant", function (req, res) {
 		// if no common or scientific name provided
 		if(!req.body.plantName){
+			console.log("hey")
 			// add plant to database
 			return db.Plant.create({
 				personal_name: req.body.personalName,
