@@ -1,9 +1,9 @@
 {
   "development": {
     "username": "root",
-    "password": "Ildhcmfam226!",
+    "password": "Iamdaniel92",
     "port": "3306",
-    "database": "testdb",
+    "database": "eden_db",
     "host": "localhost",
     "dialect": "mysql"
   },
