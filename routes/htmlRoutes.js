@@ -14,10 +14,15 @@ module.exports = function (app) {
 
 	// Auth Get Routes
 	app.get("/signup", function (req, res) {
-		res.render("signup");
+		res.render("signup", {
+			error: req.session.error
+		});
 	});
 	app.get("/signin", function (req, res) {
-		res.render("signin");
+		console.log(req.session.error);
+		res.render("signin", {
+			error: req.session.error
+		});
 	});
 	app.get("/logout", function (req, res) {
 		req.session.destroy(function () {
@@ -42,7 +47,6 @@ module.exports = function (app) {
 				id: req.user.id,
 				username: req.user.username
 			};
-			console.log(hbsObject3);
 			res.render("mygarden", {
 				myPlants: hbsObject1,
 				myEvents: hbsObject2,
@@ -69,15 +73,15 @@ module.exports = function (app) {
 			});
 			// remove duplicates from links
 			var uniquePlantLinks = [];
-			for(i = 0; i < plantLinks.length; i++){
-				if(uniquePlantLinks.indexOf(plantLinks[i]) === -1){
+			for (i = 0; i < plantLinks.length; i++) {
+				if (uniquePlantLinks.indexOf(plantLinks[i]) === -1) {
 					uniquePlantLinks.push(plantLinks[i]);
 				}
 			}
 
 			// save data as object
 			var searchOptions = [];
-			for (i=0; i<plantOptions.length; i++) {
+			for (i = 0; i < plantOptions.length; i++) {
 				var plant = {
 					plantName: plantOptions[i] + ")",
 					link: uniquePlantLinks[i]
@@ -96,13 +100,12 @@ module.exports = function (app) {
 	// route for adding new plant from garden.org to plants table in database
 	app.post("/addPlant", function (req, res) {
 		// if no common or scientific name provided
-		if(!req.body.plantName){
-			console.log("hey")
+		if (!req.body.plantName) {
 			// add plant to database
 			return db.Plant.create({
 				personal_name: req.body.personalName,
 				UserId: userId
-			}).then(function(data) {
+			}).then(function (data) {
 				// send plant view to front end for redirect
 				res.send("/plants/" + data.id);
 			});
@@ -133,7 +136,7 @@ module.exports = function (app) {
 					data: plantInfoTables,
 					image_path: plantImg,
 					UserId: userId
-				}).then(function(data){
+				}).then(function (data) {
 					// send plant view to front end for redirect
 					res.send("/plants/" + data.id);
 				});
@@ -141,7 +144,7 @@ module.exports = function (app) {
 	});
 
 	// View Plant Route
-	app.get("/plants/:id", function(req, res) {
+	app.get("/plants/:id", function (req, res) {
 		db.Plant.findOne({
 			where: {
 				id: req.params.id
@@ -149,7 +152,6 @@ module.exports = function (app) {
 			include: db.User
 		}).then(function (data) {
 			var hbsObject = data.dataValues;
-			console.log(hbsObject);
 			res.render("plants", {
 				plant: hbsObject
 			});
@@ -157,13 +159,15 @@ module.exports = function (app) {
 	});
 
 	// Signup Post Routes
-	app.post("/signup", function(req, res, next) {
-		passport.authenticate("local-signup", function(err, user, info) {
+	app.post("/signup", function (req, res, next) {
+		passport.authenticate("local-signup", function (err, user, info) {
 			if (err) {
 				return next(err);
 			}
 			if (!user) {
-				return res.redirect("/signup");
+				req.session.error = "Email is invalid or username is already taken";
+				var error = req.session.error;
+				return (error, res.redirect("/signup"));
 			}
 			req.logIn(user, function (err) {
 				if (err) {
@@ -175,13 +179,15 @@ module.exports = function (app) {
 	});
 
 	// Signin Post Route
-	app.post("/signin", function(req, res, next) {
-		passport.authenticate("local-signin", function(err, user, info) {
+	app.post("/signin", function (req, res, next) {
+		passport.authenticate("local-signin", function (err, user, info) {
 			if (err) {
 				return next(err);
 			}
 			if (!user) {
-				return (res.redirect("/signin"));
+				req.session.error = "Incorrect username or password";
+				var error = req.session.error;
+				return (error, res.redirect("/signin"));
 			}
 			req.logIn(user, function (err) {
 				if (err) {

@@ -16,8 +16,20 @@
 	</div>
 </nav>
 <div class="container">
-	<div class="row">
 
+	{{!-- Failure Flash Message on Error --}}
+	{{#if error}}
+		<div class="row">
+			<div class="col-4"></div>
+			<div class="col-4">
+				<h4 class="auth-error">{{error}}</h4>
+			</div>
+			<div class="col-4"></div>
+		</div>
+	{{/if}}
+
+	<div class="row">
+		
 		<div class="col-md-4"></div>
 
 		<div class="col-md-4 col-md-offset-4 auth-panel">
@@ -46,4 +58,5 @@
 		<div class="col-md-4"></div>
 
 	</div>
+
 </div>

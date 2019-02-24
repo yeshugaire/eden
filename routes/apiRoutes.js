@@ -57,6 +57,7 @@ module.exports = function (app) {
 			res.json(dbEvent);
 		});
 	});
+
 	// Delete an plant by id
 	app.delete("/api/plants/:id", function (req, res) {
 		db.Plant.destroy({
