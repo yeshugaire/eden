@@ -2,6 +2,8 @@ require("dotenv").config();
 require("dotenv").load();
 var express = require("express");
 var exphbs = require("express-handlebars");
+var flash = require("connect-flash");
+var cookieParser = require("cookie-parser");
 
 var db = require("./models");
 
@@ -26,10 +28,17 @@ app.use(express.static("public"));
 app.use(session({
 	secret: process.env.SESSION_SECRET,
 	resave: true,
-	saveUninitialized: true
+	saveUninitialized: true,
+	cookie: {
+		maxAge: 60000
+	}
 }));
+app.use(cookieParser(process.env.SESSION_SECRET));
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Flash Messages for Signup/Signin
+app.use(flash());
 
 // Handlebars
 app.engine(

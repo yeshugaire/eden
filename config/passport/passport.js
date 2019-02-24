@@ -85,20 +85,19 @@ module.exports = function(passport, user) {
 			}).then(function(user) {
 				if (!user) {
 					return done(null, false, {
-						message: "Username does not exist"
+						message: "Username does not exist."
 					});
 				}
 
 				if (!isValidPassword(user.password, password)) {
 					return done(null, false, {
-						message: "Password is incorrect"
+						message: "Password is incorrect."
 					});
 				}
 
 				var userInfo = user.get();
 				return done(null, userInfo);
 			}).catch(function(err) {
-				console.log("Error: ", err);
 
 				return done(null, false, {
 					message: "Something went wrong with your signin."

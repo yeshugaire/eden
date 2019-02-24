@@ -47,6 +47,14 @@ body {
   color: white;
 }
 
+/* Auth Errors */
+.auth-error {
+  display: block;
+  text-align: center;
+  color: white;
+  font-size: 12px;
+}
+
 /* Buttons */
 .btn {
   background-color: #78B70C;
